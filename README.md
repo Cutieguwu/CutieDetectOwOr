@@ -1,7 +1,10 @@
 # DetectOwOr
- Cutieguwu's basic virus and malware scanner. Searches for known threats only by looking for files known to be related.
 
-In very early development!!!
+## Cutieguwu's basic virus and malware scanner. Searches for known threats only by looking for files known to be related.
+
+**In very early development!!! Does not actually work at the moment!!!**
+
+Linux is getting priority for support and will have actual testing done.
 
 At present this will support basic detection of the following:
 
