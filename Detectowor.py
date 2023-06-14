@@ -1,5 +1,6 @@
 from sys import exit
 from os import name as osname
+from os import path
 
 #Temporarily hard coded library into script
 
@@ -47,16 +48,33 @@ def init_lib_win():
 def scan_linux():
     global threats
     global threats_names
-    for i in range(len(threats)):
+
+    for i in range(len(threats)):                                                               #For each library, scan for each known sus file.
         current_search_object = threats[i]
         print("\n-- Scanning for", threats_names[i], " --")
         for l in range(len(current_search_object)):
-            print(current_search_object[l]) #Do check for files. If not found raise exception filenotfound and continue to next without report. If found, report file found and possible related threat.
+            if path.exists(path.expanduser(current_search_object[l])) == True:                  #If sus file found, warn and add to list of found files for final summary.
+                global threats_found
+
+                threats_found = []
+                threats_found.append(current_search_object[l])
+                print(current_search_object[l], "Found in system. Possible threat detected!")
+            else:
+                pass
+
+def scan_summary():
+    global threats_found
+
+    print("Scan returned", len(threats_found), "threats")
+
+    if len(threats_found) > 0:
+        for i in threats_found:
+            print("FOUND:", i)
+    else:
+        pass
 
 def run():
-    # if OS is Windows, do Windows inits and scan, elif OS is Linux, do Linux inits and scan
-
-    if osname == "nt":
+    if osname == "nt":                                                                          #If OS is Windows, do Windows inits and scan, elif OS is Linux, do Linux inits and scan.
         print("Windows system detected.")
         print("Ending here; Not implemented yet.")
         exit()
@@ -76,7 +94,7 @@ def run():
 
         scan_linux()
 
-        #Insert final summary here
+        scan_summary()
 
         exit()
 try:
