@@ -4,48 +4,29 @@ from os import path
 
 #Temporarily hard coded library into script
 
-def init_lib_linux_filesearch():
+def init_lib_filesearch():
    
     #Fractureiser
-    global sus_linux_files_fractureiser
-    sus_linux_files_fractureiser = [
+    global sus_files_fractureiser
+    sus_files_fractureiser = [
         "~/.config/.data/lib.jar",
         "~/.config/systemd/user/systemd-utility.service",
         "/etc/systemd/system/systemd-utility.service"
     ]
     
     #Skyrage
-    global sus_linux_files_skyrage
-    sus_linux_files_skyrage = [
+    global sus_files_skyrage
+    sus_files_skyrage = [
         "/bin/vmd-gnu",
         "/etc/systemd/system/vmd-gnu.service"
     ]
 
-def init_lib_win_filesearch():
-
-    #Fractureiser
-    global sus_win_files_fractureiser
-    sus_win_files_fractureiser = [
-        r'%LOCALAPPDATA%\\Microsoft Edge\\libWebGL64.jar'
-    ]
-
-    #Skyrage
-    global sus_win_files_skyrage
-    sus_win_files_skyrage = [
-        r'%AppData%\\Microsoft\\Start Menu\\Programs\\Startup\\jawaw.jar',
-        r'%AppData%\\..\\LocalLow\\Microsoft\\Internet Explorer\\DOMStore\\microsoft-vm-core'
-    ]
-
-def init_lib_linux():
+def init_lib():
     print("Initializing Linux Library: File Locations")
-    init_lib_linux_filesearch()
+    init_lib_filesearch()
     print("NOTICE: Signature checks not implemented yet.")
 
-def init_lib_win():
-    init_lib_win_filesearch()
-    print("NOTICE: Signature checks not implemented yet.")
-
-def scan_linux():
+def scan():
     global threats
     global threats_names
 
@@ -65,7 +46,7 @@ def scan_linux():
 def scan_summary():
     global threats_found
 
-    print("Scan returned", len(threats_found), "threats")
+    print("\nScan returned", len(threats_found), "threats")
 
     if len(threats_found) > 0:
         for i in threats_found:
@@ -76,15 +57,15 @@ def scan_summary():
 def run():
     if osname == "nt":                                                                          #If OS is Windows, do Windows inits and scan, elif OS is Linux, do Linux inits and scan.
         print("Windows system detected.")
-        print("Ending here; Not implemented yet.")
+        print("Ending here; Windows is not supported.")
         exit()
     elif osname == "posix":
         print("Posix compliant (Linux) system detected")
-        init_lib_linux()
+        init_lib()
         global threats
         threats = [
-            sus_linux_files_fractureiser, 
-            sus_linux_files_skyrage
+            sus_files_fractureiser, 
+            sus_files_skyrage
         ]
         global threats_names
         threats_names = [
@@ -92,13 +73,12 @@ def run():
             "Skyrage {Files}"
         ]
 
-        scan_linux()
+        scan()
 
         scan_summary()
 
         exit()
 try:
-    while True:
-        run()
+    run()
 except KeyboardInterrupt:
     exit()
