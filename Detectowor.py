@@ -1,11 +1,29 @@
 from sys import exit
-from os import name as osname
-from os import path
+from os import name as osname, path
+
+__DEBUG_RUN = True
+__DEBUG_LIBRARY = False
+__DEBUG_SCAN = False
+
+
+class __DEBUG():
+    def run(report1, report2=""):
+        if __DEBUG_RUN == True:
+            print("__DEBUG_RUN >>>", report1, report2)
+    
+    def library(report1, report2=""):
+        if __DEBUG_LIBRARY == True:
+            print("__DEBUG_LIBRARY >>>", report1, report2)
+    
+    def scan(report1, report2=""):
+        if __DEBUG_SCAN == True:
+            print("__DEBUG_SCAN >>>", report1, report2)
 
 #Temporarily hard coded library into script
 
 def init_lib_filesearch():
-   
+    __DEBUG.scan("Loading Library - Filesearch")
+
     #Fractureiser
     global sus_files_fractureiser
     sus_files_fractureiser = [
@@ -22,7 +40,7 @@ def init_lib_filesearch():
     ]
 
 def init_lib():
-    print("Initializing Linux Library: File Locations")
+    print("Initializing Library: File Locations")
     init_lib_filesearch()
     print("NOTICE: Signature checks not implemented yet.")
 
@@ -55,13 +73,19 @@ def scan_summary():
         pass
 
 def run():
+    __DEBUG.run("Checking OS")
+
     if osname == "nt":                                                                          #If OS is Windows, do Windows inits and scan, elif OS is Linux, do Linux inits and scan.
-        print("Windows system detected.")
+        __DEBUG.run("Windows system detected.")
+
         print("Ending here; Windows is not supported.")
         exit()
+
     elif osname == "posix":
-        print("Posix compliant (Linux) system detected")
+
+        __DEBUG.run("Posix compliant (Linux) system detected")
         init_lib()
+
         global threats
         threats = [
             sus_files_fractureiser, 
@@ -74,11 +98,12 @@ def run():
         ]
 
         scan()
-
         scan_summary()
 
         exit()
-try:
-    run()
-except KeyboardInterrupt:
-    exit()
+
+if __name__ == '__main__':
+    try:
+        run()
+    except KeyboardInterrupt:
+        exit()
