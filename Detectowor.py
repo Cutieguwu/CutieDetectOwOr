@@ -1,10 +1,8 @@
-from sys import exit
 from os import name as osname, path
 
 __DEBUG_RUN = True
 __DEBUG_LIBRARY = False
 __DEBUG_SCAN = False
-
 
 class __DEBUG():
     def run(report1, report2=""):
@@ -67,8 +65,8 @@ def scan_summary():
     print("\nScan returned", len(threats_found), "threats")
 
     if len(threats_found) > 0:
-        for i in threats_found:
-            print("FOUND:", i)
+        for _ in threats_found:
+            print("FOUND:", _)
     else:
         pass
 
@@ -106,4 +104,4 @@ if __name__ == '__main__':
     try:
         run()
     except KeyboardInterrupt:
-        exit()
+        raise SystemExit
