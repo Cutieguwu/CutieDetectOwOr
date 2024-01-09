@@ -56,8 +56,6 @@ def scan():
                 threats_found = []
                 threats_found.append(current_search_object[l])
                 print(current_search_object[l], "Found in system. Possible threat detected!")
-            else:
-                pass
 
 def scan_summary():
     global threats_found
@@ -67,8 +65,6 @@ def scan_summary():
     if len(threats_found) > 0:
         for _ in threats_found:
             print("FOUND:", _)
-    else:
-        pass
 
 def run():
     __DEBUG.run("Checking OS")
@@ -77,7 +73,7 @@ def run():
         __DEBUG.run("Windows system detected.")
 
         print("Ending here; Windows is not supported.")
-        exit()
+        raise SystemExit
 
     elif osname == "posix":
 
@@ -98,7 +94,10 @@ def run():
         scan()
         scan_summary()
 
-        exit()
+        raise SystemExit
+    else:
+        __DEBUG.run("Unknown System detected. Exiting")
+
 
 if __name__ == '__main__':
     try:
