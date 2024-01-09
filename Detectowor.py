@@ -1,26 +1,28 @@
+#! python3
+
 from os import name as osname, path
 
-__DEBUG_RUN = True
-__DEBUG_LIBRARY = False
-__DEBUG_SCAN = False
+_DEBUG_RUN = True
+_DEBUG_LIBRARY = False
+_DEBUG_SCAN = False
 
-class __DEBUG():
+class _DEBUG():
     def run(report1, report2=""):
-        if __DEBUG_RUN == True:
-            print("__DEBUG_RUN >>>", report1, report2)
+        if _DEBUG_RUN == True:
+            print("_DEBUG_RUN >>>", report1, report2)
     
     def library(report1, report2=""):
-        if __DEBUG_LIBRARY == True:
-            print("__DEBUG_LIBRARY >>>", report1, report2)
+        if _DEBUG_LIBRARY == True:
+            print("_DEBUG_LIBRARY >>>", report1, report2)
     
     def scan(report1, report2=""):
-        if __DEBUG_SCAN == True:
-            print("__DEBUG_SCAN >>>", report1, report2)
+        if _DEBUG_SCAN == True:
+            print("_DEBUG_SCAN >>>", report1, report2)
 
 #Temporarily hard coded library into script
 
 def init_lib_filesearch():
-    __DEBUG.scan("Loading Library - Filesearch")
+    _DEBUG.scan("Loading Library - Filesearch")
 
     #Fractureiser
     global sus_files_fractureiser
@@ -67,17 +69,17 @@ def scan_summary():
             print("FOUND:", _)
 
 def run():
-    __DEBUG.run("Checking OS")
+    _DEBUG.run("Checking OS")
 
     if osname == "nt":                                                                          #If OS is Windows, do Windows inits and scan, elif OS is Linux, do Linux inits and scan.
-        __DEBUG.run("Windows system detected.")
+        _DEBUG.run("Windows system detected.")
 
         print("Ending here; Windows is not supported.")
         raise SystemExit
 
     elif osname == "posix":
 
-        __DEBUG.run("Posix compliant (Linux) system detected")
+        _DEBUG.run("Posix compliant (Linux) system detected")
         init_lib()
 
         global threats
@@ -98,6 +100,9 @@ def run():
     else:
         __DEBUG.run("Unknown System detected. Exiting")
 
+
+def exit():
+    raise SystemExit
 
 if __name__ == '__main__':
     try:
