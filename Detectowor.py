@@ -98,7 +98,7 @@ def run():
 
         raise SystemExit
     else:
-        __DEBUG.run("Unknown System detected. Exiting")
+        _DEBUG.run("Unknown System detected. Exiting")
 
 
 def exit():
